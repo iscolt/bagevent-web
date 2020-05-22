@@ -6,6 +6,17 @@
 </head>
 <body>
     欢迎[[${session.user_session}]]!<br>
+    <h2>登录日志</h2>
+    <table border="1">
+        <tr>
+            <th>IP</th>
+            <th>日期</th>
+        </tr>
+        <tr th:each="log : ${logs}">
+            <td>[[${log.getLoginIp()}]]</td>
+            <td>[[${log.getCreateTime()}]]</td>
+        </tr>
+    </table>
     <a href="/logout">退出</a>
 </body>
 </html>

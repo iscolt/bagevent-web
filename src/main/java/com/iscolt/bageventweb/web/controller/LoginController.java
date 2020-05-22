@@ -1,5 +1,6 @@
 package com.iscolt.bageventweb.web.controller;
 
+import com.iscolt.bageventweb.aspect.LoginLog;
 import com.iscolt.bageventweb.common.utils.SysUtils;
 import com.iscolt.bageventweb.model.entity.User;
 import com.iscolt.bageventweb.model.entity.UserLoginLog;
@@ -49,7 +50,6 @@ public class LoginController {
      */
     @RequestMapping(value = {"/", "login"}, method = RequestMethod.GET)
     public String login(){
-
         return "login";
     }
 
@@ -79,15 +79,19 @@ public class LoginController {
      * @return
      */
     @PostMapping(value = "login")
+    @LoginLog
     public String login(String account, String password, Model model){
         Boolean aBoolean = false;
+        User user = new User();
         if (SysUtils.isEmail(account)) {
             // 邮箱登陆
+            user = userService.selectByEmail(account);
             aBoolean = userService.loginByEmail(account, password);
         }
 
         else if (SysUtils.isCellPhone(account)) {
             // 手机登陆
+            user = userService.selectByCellPhone(account);
             aBoolean = userService.loginByCellPhone(account, password);
         }
 
@@ -95,7 +99,8 @@ public class LoginController {
             // 将登录信息放入会话
             httpServletRequest.getSession().setAttribute(USER_SESSION_KEY, account);
             model.addAttribute(USER_SESSION_KEY, account);
-            return "redirect:/index";
+            model.addAttribute("logs", userLoginLogService.listByUserId(user.getUserId()));
+            return index();
         }
 
         model.addAttribute(USER_LOGIN_ERROR, "登陆失败！");

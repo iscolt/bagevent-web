@@ -1,5 +1,6 @@
 package com.iscolt.bageventweb.service.impl;
 
+import com.iscolt.bageventweb.aspect.LoginLog;
 import com.iscolt.bageventweb.model.entity.User;
 import com.iscolt.bageventweb.repository.UserRepository;
 import com.iscolt.bageventweb.service.UserService;

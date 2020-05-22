@@ -1,5 +1,6 @@
 package com.iscolt.bageventweb.model.base;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Basic;
@@ -25,6 +26,7 @@ import java.util.Date;
 @Data
 public class BaseEntity implements Serializable {
 
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
     @Column(name = "create_time")
     private Timestamp createTime;
 

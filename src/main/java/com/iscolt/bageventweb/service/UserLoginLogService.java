@@ -3,6 +3,7 @@ package com.iscolt.bageventweb.service;
 import com.iscolt.bageventweb.model.entity.User;
 import com.iscolt.bageventweb.model.entity.UserLoginLog;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -37,4 +38,11 @@ public interface UserLoginLogService {
      * @return
      */
     List<UserLoginLog> listByUserId(Integer userId);
+
+    /**
+     * 发送登录日志
+     * @param account
+     * @return
+     */
+    Boolean sendLoginLogMsg(String account, HttpServletRequest request);
 }

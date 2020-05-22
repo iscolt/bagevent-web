@@ -1,5 +1,6 @@
 package com.iscolt.bageventweb.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.iscolt.bageventweb.model.base.BaseEntity;
 import lombok.Data;
 
@@ -30,7 +31,7 @@ import java.util.Objects;
 @Data
 @Entity
 @Table(name = "user_login_log", schema = "bagevent_test", catalog = "")
-public class UserLoginLog extends BaseEntity implements Serializable {
+public class UserLoginLog implements Serializable {
 
     @Id
     @Column(name = "login_id")
@@ -42,5 +43,18 @@ public class UserLoginLog extends BaseEntity implements Serializable {
     @Basic
     @Column(name = "login_ip")
     private String loginIp;
+    @JsonFormat(locale="zh", timezone="GMT+8", pattern="yyyy-MM-dd HH:mm:ss")
+    @Column(name = "create_time")
+    private Timestamp createTime;
+
+    /**
+     * 初始化执行
+     */
+    @PrePersist
+    protected void prePersist() {
+        if (createTime == null) {
+            createTime =  new Timestamp(new Date().getTime());;
+        }
+    }
 
 }
